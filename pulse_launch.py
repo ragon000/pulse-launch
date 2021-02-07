@@ -46,9 +46,9 @@ def main():
     args = parser.parse_args()
 
     with pulsectl.Pulse('event-printer') as pulse:
-        def handle_event():
+        def handle_event(ignore):
             threading.Thread(target=second_thread, args=(args,)).run()
-        handle_event()
+        handle_event(False)
         pulse.event_mask_set('sink')
         pulse.event_callback_set(handle_event)
         pulse.event_listen()
