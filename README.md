@@ -1,11 +1,11 @@
-# pulse-launch
+# pulse_launch
 
 A simple python script to launch a command when a pulseaudio sink changes
 
 ## Usage
 
 ```
-usage: pulse-launch.py [-h] [--other_cmd OTHER_CMD] sink_name cmd
+usage: pulse_launch.py [-h] [--other_cmd OTHER_CMD] sink_name cmd
 
 positional arguments:
   sink_name             name of the sink you want to launch smth for
