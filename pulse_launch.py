@@ -20,9 +20,19 @@
 
 import argparse
 import threading
+import signal
+import os
+import sys
 from subprocess import Popen
 
 import pulsectl
+
+def handle(cmd):
+    Popen(cmd, shell=True)
+    sys.exit(0)
+
+def handler(cmd):
+    return lambda a,b: handle(cmd)
 
 def second_thread(args):
     with pulsectl.Pulse('name-fetcher') as pulse:
@@ -43,7 +53,12 @@ def main():
     parser.add_argument(
         "--other_cmd",
         help="the cmd you want to launch if sink-name is not default")
+    parser.add_argument(
+        "--term_cmd",
+        help="the cmd you want to launch on sigterm")
     args = parser.parse_args()
+    signal.signal(signal.SIGTERM, handler(args.term_cmd))
+    signal.signal(signal.SIGINT, handler(args.term_cmd))
 
     with pulsectl.Pulse('event-printer') as pulse:
         def handle_event(ignore):
