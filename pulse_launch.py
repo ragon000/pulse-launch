@@ -64,7 +64,7 @@ def main():
         def handle_event(ignore):
             threading.Thread(target=second_thread, args=(args,)).run()
         handle_event(False)
-        pulse.event_mask_set('sink')
+        pulse.event_mask_set('server')
         pulse.event_callback_set(handle_event)
         pulse.event_listen()
 
